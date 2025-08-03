@@ -1,0 +1,36 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import Home from './pages/home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import DistributorDashboard from './pages/DDashboard'
+import PendingQuotations from './pages/distributor/PendingQuotations'
+import MyResponses from './pages/distributor/MyResponses'
+import ProfileInfo from './pages/distributor/ProfileInfo'
+import OrdersAwarded from './pages/distributor/OrdersAwarded'
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <BrowserRouter>
+    <Toaster position='top-right'/>  {/* react toast allet pennanna ona nisa */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/distributor/ADashboard" element={<PendingQuotations />} />
+        <Route path="/distributor/OrdersAwarded" element={<OrdersAwarded />} />
+        <Route path="/distributor/ProfileInfo" element={<ProfileInfo />} />
+        <Route path="/distributor/MyResponses" element={<MyResponses />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/products/:id" element={<div>Product details coming soon...</div>} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+
+export default App
