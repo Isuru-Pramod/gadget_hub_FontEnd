@@ -25,7 +25,7 @@ export default function Login() {
             } else if (user.role === "distributor") {
                 navigate("/distributor/ADashboard");
             } else if (user.role === "customer") {
-                navigate("/customer");
+                navigate("/");
             } else {
                 toast.error("Unknown role");
             }
