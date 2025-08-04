@@ -18,10 +18,12 @@ export default function DistributorSidebar() {
     }, [navigate]);
 
     return (
-        <div className="w-64 bg-black text-white min-h-screen flex flex-col justify-between py-6">
-            <div>
-                <h1 className="text-2xl font-bold text-orange-400 px-6">Distributor Panel </h1>
-                <h1 className="text-2xl font-bold text-orange-100 mb-8 ml-7 px-6"><strong>{user?.username}</strong> </h1>
+        <div className="w-64 bg-black text-white fixed h-full flex flex-col py-6">
+            <div className="flex-1 overflow-y-auto">
+                <h1 className="text-2xl font-bold text-orange-400 px-6">Distributor Panel</h1>
+                <h1 className="text-xl font-bold text-orange-100 mb-8 px-6">
+                    <strong>{user?.username}</strong>
+                </h1>
                 
                 <nav className="flex flex-col gap-4 px-6">
                     <Link to="/distributor/ADashboard" className="hover:text-orange-400">Pending Quotations</Link>
@@ -30,8 +32,11 @@ export default function DistributorSidebar() {
                     <Link to="/distributor/ProfileInfo" className="hover:text-orange-400">Profile Info</Link>
                 </nav>
             </div>
-            <div className="px-6">
-                <button onClick={handleLogout} className="w-full bg-orange-500 text-black py-2 font-bold rounded hover:bg-red-600">
+            <div className="px-6 pb-6">
+                <button 
+                    onClick={handleLogout} 
+                    className="w-full bg-orange-500 text-black py-2 font-bold rounded hover:bg-red-600"
+                >
                     Logout
                 </button>
             </div>

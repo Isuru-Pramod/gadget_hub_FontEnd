@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 export default function Header(){
     return(
         <header className="bg-gradient-to-r from-orange-300 via-orange-400 to-orange-600 rounded-lg shadow-lg
-         h-[80px] w-screen flex items-center justify-between"> 
-            <img src="https://cdn-icons-png.flaticon.com/512/107/107831.png" alt="logo" className="w-[40px] h-[40px] ml-[20px]"/>
+         h-[80px] w-screen flex items-center justify-between sticky top-0 z-10"> 
+         <Link to="/massage">
+            <img src="./public/msg.png" alt="msgIcon" className="w-[40px] h-[40px] ml-[20px] hover:scale-105 transition-transform duration-300 hover:bg-white active:scale-95 active:bg-orange-300"/>
+         </Link>
+            
             <div className="flex items-center">
                 <Link to="/"><h1 className="text-3xl font-bold underline">Welcome to GadgetHub</h1></Link>
             </div>

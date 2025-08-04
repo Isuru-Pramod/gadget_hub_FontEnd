@@ -7,18 +7,19 @@ import { Toaster } from 'react-hot-toast'
 import Home from './pages/home'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import DistributorDashboard from './pages/DDashboard'
 import PendingQuotations from './pages/distributor/PendingQuotations'
 import MyResponses from './pages/distributor/MyResponses'
 import ProfileInfo from './pages/distributor/ProfileInfo'
 import OrdersAwarded from './pages/distributor/OrdersAwarded'
+import Massage from './pages/massage'
+import ProductManagement from './pages/Admin/adminHome'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <BrowserRouter>
-    <Toaster position='top-right'/>  {/* react toast allet pennanna ona nisa */}
+    <Toaster position='top-left'/>  {/* react toast allet pennanna ona nisa */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/distributor/ADashboard" element={<PendingQuotations />} />
@@ -26,6 +27,8 @@ function App() {
         <Route path="/distributor/ProfileInfo" element={<ProfileInfo />} />
         <Route path="/distributor/MyResponses" element={<MyResponses />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<ProductManagement />} />
+        <Route path="/massage" element={<Massage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/products/:id" element={<div>Product details coming soon...</div>} />
       </Routes>
