@@ -34,7 +34,7 @@ export default function Cart({ cartItems, onIncrement, onDecrement, onRemove, on
                 <button
                     onClick={onPlaceOrder}
                     disabled={cartItems.length === 0}
-                    className="w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 disabled:opacity-50"
+                    className="w-full py-2 bg-orange-600 text-white font-semibold rounded hover:bg-blue-700 disabled:opacity-50"
                 >
                     Place Order
                 </button>

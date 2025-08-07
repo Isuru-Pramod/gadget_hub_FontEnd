@@ -7,9 +7,12 @@ import Cart from "../components/Cart";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-    const [state, setState] = useState("loading");
+     const [state, setState] = useState("loading");
     const [items, setItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
+
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
         axios.get("http://localhost:5131/api/products")
@@ -25,8 +28,6 @@ export default function Home() {
     }, []);
 
     const handleAddToCart = (item) => {
-
-
         setCartItems((prev) => {
             const existing = prev.find(p => p.id === item.id);
             if (existing) {
@@ -52,7 +53,15 @@ export default function Home() {
     };
 
     const handlePlaceOrder = () => {
-        if (cartItems.length === 0) return;
+        if (!user || user.role !== "customer") {
+            toast.error("You must be logged in to place an order");
+            return;
+        }
+
+        if (cartItems.length === 0) {
+            toast.error("Your cart is empty");
+            return;
+        }
 
         const quotationRequest = {
             customerUsername: user.username,
@@ -65,7 +74,7 @@ export default function Home() {
 
         axios.post("http://localhost:5131/api/quotations/request", quotationRequest)
             .then(res => {
-                toast.success("Quotation request sent to distributors!", {
+                toast.success("Quotation sent successfully", {
                     icon: '🚀',
                     duration: 4000,
                 });
