@@ -11,9 +11,6 @@ export default function Home() {
     const [items, setItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
 
-    const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem("user"));
-
     useEffect(() => {
         axios.get("http://localhost:5131/api/products")
             .then((res) => {
@@ -28,6 +25,8 @@ export default function Home() {
     }, []);
 
     const handleAddToCart = (item) => {
+
+
         setCartItems((prev) => {
             const existing = prev.find(p => p.id === item.id);
             if (existing) {
@@ -53,15 +52,7 @@ export default function Home() {
     };
 
     const handlePlaceOrder = () => {
-        if (!user || user.role !== "customer") {
-            toast.error("You must be logged in to place an order");
-            return;
-        }
-
-        if (cartItems.length === 0) {
-            toast.error("Your cart is empty");
-            return;
-        }
+        if (cartItems.length === 0) return;
 
         const quotationRequest = {
             customerUsername: user.username,

@@ -29,8 +29,6 @@ const AdminSidebar = () => {
                 <nav className="flex flex-col gap-4 px-6">
                     <Link to="/admin" className="hover:text-orange-400">Product Management</Link>
                     <Link to="/admin/users" className="hover:text-orange-400">User Management</Link>
-                    <Link to="/admin/orders" className="hover:text-orange-400">Order Management</Link>
-                    <Link to="/admin/reports" className="hover:text-orange-400">Reports</Link>
                 </nav>
             </div>
             <div className="px-6 pb-6">
@@ -234,7 +232,7 @@ export default function ProductManagement() {
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(product.id)}
-                                                    className=" hover:text-white bg-red-600 hover:bg-red-700  text-white font-bold py-2 px-4 rounded"
+                                                    className=" hover:text-white bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                                 >
                                                     Delete
                                                 </button>

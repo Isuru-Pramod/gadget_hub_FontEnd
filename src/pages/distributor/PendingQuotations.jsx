@@ -154,9 +154,9 @@ export default function PendingQuotations() {
                                                     <p className="text-red-500 font-semibold text-sm">Quantity Requested: <span className="font-normal">{item.quantityRequested}</span></p>
                                                 </div>
                                             </div>
-
+                                            {/* Input fields and action buttons section */}
                                             <div className="w-full md:w-2/3 flex flex-col md:flex-row items-center justify-between pl-0 md:pl-6">
-
+                                                {/* Input fields aligned horizontally on desktop, stacked on mobile */}
                                                 <div className="flex flex-col md:flex-row gap-4 items-center w-full md:w-auto mb-4 md:mb-0">
                                                     <input
                                                         type="number"
