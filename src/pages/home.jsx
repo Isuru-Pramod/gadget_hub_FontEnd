@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
 import Cart from "../components/Cart";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
      const [state, setState] = useState("loading");
@@ -12,6 +13,10 @@ export default function Home() {
     const [cartItems, setCartItems] = useState([]);
 
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const navigate = useNavigate();
+
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
@@ -28,6 +33,8 @@ export default function Home() {
     }, []);
 
     const handleAddToCart = (item) => {
+
+
         setCartItems((prev) => {
             const existing = prev.find(p => p.id === item.id);
             if (existing) {
@@ -62,13 +69,25 @@ export default function Home() {
             toast.error("Your cart is empty");
             return;
         }
+        if (!user || user.role !== "customer") {
+            toast.error("You must be logged in for place an order");
+            return;
+        }
+
+        if (cartItems.length === 0) {
+            toast.error("Cart is empty");
+            return;
+        }
 
         const quotationRequest = {
+            customerUsername: user.username,
             customerUsername: user.username,
             productOrders: cartItems.map(item => ({
                 productId: item.id,
                 quantity: item.quantity
+                quantity: item.quantity
             })),
+            distributors: ["techworld", "electrocom", "gadgetcentral"]
             distributors: ["techworld", "electrocom", "gadgetcentral"]
         };
 
