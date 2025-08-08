@@ -12,7 +12,7 @@ export default function MyResponses() {
     useEffect(() => {
         if (!user?.username) return;
 
-        axios.get("http://localhost:5131/api/Quotations/all-quotations")
+        axios.get("http://localhost:5131/api/Quotations/all")
             .then(res => {
                 const processed = res.data.filter(q =>
                     q.distributor?.toLowerCase() === user.username.toLowerCase() 

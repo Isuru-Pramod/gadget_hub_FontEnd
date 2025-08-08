@@ -1,6 +1,6 @@
 export default function Cart({ cartItems, onIncrement, onDecrement, onRemove, onPlaceOrder }) {
     return (
-        <div className="w-full p-4 bg-white">
+        <div className="w-full p-4 bg-white ">
             <h2 className="text-xl font-bold mb-4">Your Cart ({cartItems.length} items)</h2>
             {cartItems.map((item) => (
                 <div key={item.id} className="mb-4 border-b pb-3">

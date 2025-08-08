@@ -28,8 +28,10 @@ export default function DistributorSidebar() {
                 <nav className="flex flex-col gap-4 px-6">
                     <Link to="/distributor/ADashboard" className="hover:text-orange-400">Pending Quotations</Link>
                     <Link to="/distributor/MyResponses" className="hover:text-orange-400">My Responses</Link>
+                    <Link to="/distributor/orders" className="hover:text-orange-400">Orders</Link>
                     <Link to="/distributor/OrdersAwarded" className="hover:text-orange-400">Orders Awarded</Link>
                     <Link to="/distributor/ProfileInfo" className="hover:text-orange-400">Profile Info</Link>
+                    
                 </nav>
             </div>
             <div className="px-6 pb-6">

@@ -5,12 +5,15 @@ import { toast } from "react-hot-toast";
 import { RiHome2Fill } from "react-icons/ri";
 import { FaBusinessTime } from "react-icons/fa";
 import { BsCartCheckFill } from "react-icons/bs";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 export default function ConfirmedOrders() {
     const [confirmedOrders, setConfirmedOrders] = useState([]);
     const [products, setProducts] = useState({});
     const [loading, setLoading] = useState(true);
     const user = JSON.parse(localStorage.getItem("user"));
+
+    
 
     useEffect(() => {
         if (!user?.username) return;
@@ -53,6 +56,21 @@ export default function ConfirmedOrders() {
         date.setDate(date.getDate() + days);
         return formatDate(date.toISOString());
     };
+
+        const handleDeleteOrder = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this awarded order?")) return;
+
+    try {
+        await axios.delete(`http://localhost:5131/api/Orders/order-statuses/${id}`);
+        setAwardedOrders(prev => prev.filter(order => order.id !== id));
+        toast.success("deleted successfully.");
+    } catch (err) {
+        console.error(err);
+        toast.error("Failed to delete");
+    }
+};
+
+
 
     return (
         <div className="flex flex-col bg-gray-100 w-screen min-h-screen">
@@ -133,6 +151,7 @@ export default function ConfirmedOrders() {
                                                     <div className="w-24 h-24 bg-gray-200 animate-pulse rounded"></div>
                                                 )}
                                             </div>
+                                            
 
                                             {/* Product Info */}
                                             <div>
@@ -156,6 +175,7 @@ export default function ConfirmedOrders() {
                                                 <p className="text-sm text-gray-600 mt-1">Receive By</p>
                                                 <p className="font-semibold text-blue-700">{getDeliveryDate(order.orderDate, order.estimatedDeliveryDays)}</p>
                                             </div>
+                                            
 
                                             {/* Distributor Info */}
                                             <div>
@@ -169,7 +189,17 @@ export default function ConfirmedOrders() {
                                                 <p className="text-sm text-gray-600">Order Date</p>
                                                 <p className="font-semibold">{formatDate(order.orderDate)}</p>
                                                 <p className="text-xs text-gray-500">{formatTime(order.orderDate)}</p>
+                                                <div className="flex justify-end">
+                                            <button
+                                                onClick={() => handleDeleteOrder(order.id)}
+                                                className="text-red-600 hover:text-red-800 transition-colors text-xl"
+                                                title="Delete Order"
+                                            >
+                                                <RiDeleteBin6Line />
+                                            </button>
+                                        </div>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 );

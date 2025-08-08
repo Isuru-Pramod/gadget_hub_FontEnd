@@ -4,7 +4,7 @@ import DistributorSidebar from "../../components/DistributorSidebar";
 import { toast } from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-export default function OrdersAwarded() {
+export default function Orders() {
     const [awardedOrders, setAwardedOrders] = useState([]);
     const [products, setProducts] = useState({});
     const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ export default function OrdersAwarded() {
                 const filteredOrders = res.data.filter(
                     (order) =>
                         order.selectedDistributor?.toLowerCase() === user.username.toLowerCase() &&
-                        order.status === "Confirmed"
+                        order.status === "ChosenOne"
                 );
                 setAwardedOrders(filteredOrders);
 

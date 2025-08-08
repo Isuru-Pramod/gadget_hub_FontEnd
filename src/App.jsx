@@ -16,6 +16,7 @@ import ProductManagement from './pages/Admin/adminHome'
 import ConfirmedOrders from './pages/ConfirmedOrders'
 import OrderManagement from './pages/Admin/OrderManagement'
 import UserManagement from './pages/Admin/UserManagement'
+import Orders from './pages/distributor/Orders'
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/distributor/OrdersAwarded" element={<OrdersAwarded />} />
         <Route path="/distributor/ProfileInfo" element={<ProfileInfo />} />
         <Route path="/distributor/MyResponses" element={<MyResponses />} />
+        <Route path="/distributor/orders" element={<Orders />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<ProductManagement />} />
         <Route path="/massage" element={<Massage />} />

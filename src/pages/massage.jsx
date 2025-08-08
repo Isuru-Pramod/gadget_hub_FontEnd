@@ -67,7 +67,7 @@ export default function Massage() {
         try {
             await Promise.all(
                 quotationIds.map(id => 
-                    axios.delete(`http://localhost:5131/api/quotations/${id}`)
+                    axios.delete(`http://localhost:5131/api/Quotations/delete-quotation/${id}`)
                 )
             );
             

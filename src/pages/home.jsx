@@ -89,6 +89,7 @@ export default function Home() {
     return (
         <div className="bg-gray-100 min-h-screen">
             <Header />
+            <div className="bg-gray-200 h-[700px] w-[420px] fixed bottom-0 right-0 "></div>
             
             <div className=" flex">
                 <div className="w-3/4 p-8">
@@ -138,6 +139,7 @@ export default function Home() {
                     />
                 </div>
             </div>
+            
         </div>
     );
 }
