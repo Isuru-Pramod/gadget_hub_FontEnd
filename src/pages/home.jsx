@@ -15,10 +15,6 @@ export default function Home() {
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const navigate = useNavigate();
-
-    const user = JSON.parse(localStorage.getItem("user"));
-
     useEffect(() => {
         axios.get("http://localhost:5131/api/products")
             .then((res) => {
@@ -61,34 +57,24 @@ export default function Home() {
 
     const handlePlaceOrder = () => {
         if (!user || user.role !== "customer") {
+
             toast.error("You must be logged in to place an order");
             return;
         }
 
         if (cartItems.length === 0) {
-            toast.error("Your cart is empty");
-            return;
-        }
-        if (!user || user.role !== "customer") {
-            toast.error("You must be logged in for place an order");
-            return;
-        }
 
-        if (cartItems.length === 0) {
-            toast.error("Cart is empty");
+            toast.error("Your cart is empty");
+
             return;
         }
 
         const quotationRequest = {
-            customerUsername: user.username,
-            customerUsername: user.username,
             productOrders: cartItems.map(item => ({
                 productId: item.id,
-                quantity: item.quantity
-                quantity: item.quantity
+                quantityRequested: item.quantity
             })),
-            distributors: ["techworld", "electrocom", "gadgetcentral"]
-            distributors: ["techworld", "electrocom", "gadgetcentral"]
+            distributors: ["d1", "d2", "d3"] // use actual distributor IDs or usernames if needed
         };
 
         axios.post("http://localhost:5131/api/quotations/request", quotationRequest)
