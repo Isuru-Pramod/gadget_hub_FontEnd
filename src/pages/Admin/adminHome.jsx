@@ -28,7 +28,8 @@ const AdminSidebar = () => {
                 
                 <nav className="flex flex-col gap-4 px-6">
                     <Link to="/admin" className="hover:text-orange-400">Product Management</Link>
-                    <Link to="/admin/users" className="hover:text-orange-400">User Management</Link>
+                    <Link to="/orderManagement" className="hover:text-orange-400">Order Management</Link>
+                    <Link to="/userManagement" className="hover:text-orange-400">User Management</Link>
                 </nav>
             </div>
             <div className="px-6 pb-6">

@@ -18,7 +18,7 @@ export default function DistributorSidebar() {
     }, [navigate]);
 
     return (
-        <div className="w-64 bg-black text-white fixed h-full flex flex-col py-6">
+        <div className="w-64 bg-gray-800 text-white fixed h-full flex flex-col py-6">
             <div className="flex-1 overflow-y-auto">
                 <h1 className="text-2xl font-bold text-orange-400 px-6">Distributor Panel</h1>
                 <h1 className="text-xl font-bold text-orange-100 mb-8 px-6">

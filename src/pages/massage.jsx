@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { RiHome2Fill } from "react-icons/ri";
+import { FaBusinessTime } from "react-icons/fa";
+import { BsCartCheckFill } from "react-icons/bs";
 
 export default function Massage() {
     const [groupedQuotations, setGroupedQuotations] = useState([]);
@@ -83,10 +86,44 @@ export default function Massage() {
         <div className="flex flex-col bg-gray-100 w-screen h-screen">
             <div className="sticky top-0 z-10 bg-gradient-to-r from-orange-300 via-orange-400 to-orange-600 rounded-lg shadow-lg
                 h-[80px] w-screen flex items-center justify-between"> 
-                <Link to="/">
-                    <img src="./public/home.png" alt="HomeIcon" className="w-[60px] h-[60px] ml-[20px] hover:scale-105 transition-transform duration-300 hover:bg-white active:scale-95 active:bg-orange-300"/>
-                </Link>
-                
+<div className="flex items-center gap-4 px-4 py-3 bg-orange-200 rounded-full shadow-sm ml-[20px]">
+  <Link 
+    to="/" 
+    className="p-2 text-gray-800 hover:text-gray-600 transition-colors duration-200"
+    aria-label="Home"
+  >
+    <RiHome2Fill className="w-6 h-6" />
+  </Link>
+  
+  {user && (
+    <>
+
+      
+      <Link 
+        to="/massage" 
+        className="p-2 text-gray-800 hover:text-gray-600 bg-amber-500  transition-colors duration-200 relative group rounded-full"
+        aria-label="Appointments"
+      >
+        <FaBusinessTime className="w-6 h-6" />
+        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          Appointments
+        </span>
+      </Link>
+      
+      <Link 
+        to="/confirmedOrders" 
+        className="p-2 text-gray-800 hover:text-gray-600 transition-colors duration-200 relative group"
+        aria-label="Confirmed Orders"
+      >
+        <BsCartCheckFill className="w-6 h-6" />
+        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          My Orders
+        </span>
+      </Link>
+    </>
+  )}
+</div>
+      
                 <div className="flex items-center">
                     <Link to="/"><h1 className="text-3xl font-bold underline">GadgetHub</h1></Link>
                 </div>

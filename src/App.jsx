@@ -14,7 +14,9 @@ import OrdersAwarded from './pages/distributor/OrdersAwarded'
 import Massage from './pages/massage'
 import ProductManagement from './pages/Admin/adminHome'
 import ConfirmedOrders from './pages/ConfirmedOrders'
-import Orders from './components/Orders'
+import OrderManagement from './pages/Admin/OrderManagement'
+import UserManagement from './pages/Admin/UserManagement'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -33,7 +35,8 @@ function App() {
         <Route path="/massage" element={<Massage />} />
         <Route path="/confirmedOrders" element={<ConfirmedOrders />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/orders" element={<Orders />} />
+        <Route path="/orderManagement" element={<OrderManagement />} />
+        <Route path="/userManagement" element={<UserManagement />} />
       </Routes>
     </BrowserRouter>
   )

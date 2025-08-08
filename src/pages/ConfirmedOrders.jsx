@@ -2,9 +2,13 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { RiHome2Fill } from "react-icons/ri";
+import { FaBusinessTime } from "react-icons/fa";
+import { BsCartCheckFill } from "react-icons/bs";
 
 export default function ConfirmedOrders() {
     const [confirmedOrders, setConfirmedOrders] = useState([]);
+    const [products, setProducts] = useState({});
     const [loading, setLoading] = useState(true);
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -13,8 +17,25 @@ export default function ConfirmedOrders() {
 
         axios
             .get(`http://localhost:5131/api/Quotations/customer-orders?username=${user.username}`)
-            .then((res) => {
-                setConfirmedOrders(res.data);
+            .then(async (res) => {
+                const orders = res.data;
+                setConfirmedOrders(orders);
+
+                const productMap = {};
+                const uniqueIds = [...new Set(orders.map((o) => o.productId))];
+
+                await Promise.all(
+                    uniqueIds.map(async (id) => {
+                        try {
+                            const productRes = await axios.get(`http://localhost:5131/api/Products/${id}`);
+                            productMap[id] = productRes.data;
+                        } catch (err) {
+                            console.error("Failed to fetch product", id, err);
+                        }
+                    })
+                );
+
+                setProducts(productMap);
                 setLoading(false);
             })
             .catch((err) => {
@@ -24,19 +45,56 @@ export default function ConfirmedOrders() {
             });
     }, [user]);
 
+    const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString();
+    const formatTime = (dateStr) => new Date(dateStr).toLocaleTimeString();
+
+    const getDeliveryDate = (orderDate, days) => {
+        const date = new Date(orderDate);
+        date.setDate(date.getDate() + days);
+        return formatDate(date.toISOString());
+    };
+
     return (
         <div className="flex flex-col bg-gray-100 w-screen min-h-screen">
             {/* Header */}
-            <div className="sticky top-0 z-10 bg-gradient-to-r from-orange-300 via-orange-400 to-orange-600 rounded-lg shadow-lg
-                h-[80px] w-screen flex items-center justify-between"> 
-                <Link to="/">
-                    <img
-                        src="./public/home.png"
-                        alt="HomeIcon"
-                        className="w-[60px] h-[60px] ml-[20px] hover:scale-105 transition-transform duration-300 hover:bg-white active:scale-95 active:bg-orange-300"
-                    />
-                </Link>
+            <div className="sticky top-0 z-10 bg-gradient-to-r from-orange-300 via-orange-400 to-orange-600 rounded-lg shadow-lg h-[80px] w-screen flex items-center justify-between"> 
+<div className="flex items-center gap-4 px-4 py-3 bg-orange-200 rounded-full shadow-sm ml-[20px]">
+  <Link 
+    to="/" 
+    className="p-2 text-gray-800 hover:text-gray-600 transition-colors duration-200"
+    aria-label="Home"
+  >
+    <RiHome2Fill className="w-6 h-6" />
+  </Link>
+  
+  {user && (
+    <>
 
+      
+      <Link 
+        to="/massage" 
+        className="p-2 text-gray-800 hover:text-gray-600   transition-colors duration-200 relative group rounded-full"
+        aria-label="Appointments"
+      >
+        <FaBusinessTime className="w-6 h-6" />
+        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          Appointments
+        </span>
+      </Link>
+      
+      <Link 
+        to="/confirmedOrders" 
+        className="p-2 text-gray-800 hover:text-gray-600 transition-colors duration-200 relative group bg-amber-500 rounded-full"
+        aria-label="Confirmed Orders"
+      >
+        <BsCartCheckFill className="w-6 h-6" />
+        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          My Orders
+        </span>
+      </Link>
+    </>
+  )}
+</div>
                 <div className="flex items-center">
                     <Link to="/"><h1 className="text-3xl font-bold underline">GadgetHub</h1></Link>
                 </div>
@@ -57,45 +115,65 @@ export default function ConfirmedOrders() {
                         <p className="text-gray-500 text-center py-8">No confirmed orders found</p>
                     ) : (
                         <div className="space-y-4">
-                            {confirmedOrders.map((order) => (
-                                <div key={order.id} className="border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-                                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                                        <div>
-                                            <p className="text-sm text-gray-600">Product ID</p>
-                                            <p className="font-semibold">{order.productId}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600">Distributor</p>
-                                            <p className="font-semibold capitalize">{order.selectedDistributor}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600">Quantity</p>
-                                            <p className="font-semibold">{order.quantity}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600">Unit Price</p>
-                                            <p className="font-semibold text-green-700">Rs {order.pricePerUnit}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600">Delivery Days</p>
-                                            <p className="font-semibold">{order.estimatedDeliveryDays} days</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600">Status</p>
-                                            <p className="font-semibold text-blue-700">{order.status}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600">Order Date</p>
-                                            <p className="font-semibold">
-                                                {new Date(order.orderDate).toLocaleDateString()} <br />
-                                                <span className="text-xs text-gray-500">
-                                                    {new Date(order.orderDate).toLocaleTimeString()}
-                                                </span>
-                                            </p>
+                            {confirmedOrders.map((order) => {
+                                const product = products[order.productId];
+
+                                return (
+                                    <div key={order.id} className="border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+                                        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
+                                            {/* Image */}
+                                            <div>
+                                                {product?.id ? (
+                                                    <img
+                                                        src={`http://localhost:5131/api/Products/${product.id}/image`}
+                                                        alt={product.name}
+                                                        className="w-24 h-24 object-cover border rounded"
+                                                    />
+                                                ) : (
+                                                    <div className="w-24 h-24 bg-gray-200 animate-pulse rounded"></div>
+                                                )}
+                                            </div>
+
+                                            {/* Product Info */}
+                                            <div>
+                                                <p className="text-sm text-gray-600">Product</p>
+                                                <p className="font-semibold">{product?.name || order.productId}</p>
+                                            </div>
+
+                                            {/* Quantity & Price */}
+                                            <div>
+                                                <p className="text-sm text-gray-600">Quantity</p>
+                                                <p className="font-semibold">{order.quantity}</p>
+
+                                                <p className="text-sm text-gray-600 mt-1">Unit Price</p>
+                                                <p className="font-semibold text-green-700">Rs {order.pricePerUnit}</p>
+                                            </div>
+
+                                            {/* Delivery Info */}
+                                            <div>
+                                                <p className="text-sm text-gray-600">Delivery</p>
+                                                <p className="font-semibold">{order.estimatedDeliveryDays} days</p>
+                                                <p className="text-sm text-gray-600 mt-1">Receive By</p>
+                                                <p className="font-semibold text-blue-700">{getDeliveryDate(order.orderDate, order.estimatedDeliveryDays)}</p>
+                                            </div>
+
+                                            {/* Distributor Info */}
+                                            <div>
+                                                <p className="text-sm text-gray-600">Distributor</p>
+                                                <p className="font-semibold capitalize">{order.selectedDistributor}</p>
+                                                <p className="text-sm text-green-600 mt-1 font-bold">✅ Confirmed</p>
+                                            </div>
+
+                                            {/* Order Time */}
+                                            <div>
+                                                <p className="text-sm text-gray-600">Order Date</p>
+                                                <p className="font-semibold">{formatDate(order.orderDate)}</p>
+                                                <p className="text-xs text-gray-500">{formatTime(order.orderDate)}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     )}
                 </div>

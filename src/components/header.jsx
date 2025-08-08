@@ -1,5 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { RiHome2Fill } from "react-icons/ri";
+import { FaBusinessTime } from "react-icons/fa";
+import { BsCartCheckFill } from "react-icons/bs";
 
 export default function Header() {
     const [user, setUser] = useState(null);
@@ -19,32 +22,43 @@ export default function Header() {
     return (
         <header className="bg-gradient-to-r from-orange-300 via-orange-400 to-orange-600 rounded-lg shadow-lg
          h-[80px] w-screen flex items-center justify-between sticky top-0 z-10"> 
-        <div  className="flex mr-[20px]">
-            <div>
-                {user && (
-                <Link to="/massage">
-                    <img 
-                        src="./public/pending.png" 
-                        alt="msgIcon" 
-                        className="w-[40px] h-[40px] ml-[20px] hover:scale-105 transition-transform duration-300 hover:bg-white active:scale-95 active:bg-orange-300"
-                    />
-                </Link>
-                
-            )}
-            </div>
-                        <div>
-                {user && (
-                <Link to="/confirmedOrders">
-                    <img 
-                        src="./public/confirm.png" 
-                        alt="msgIcon" 
-                        className="w-[40px] h-[40px] ml-[20px] hover:scale-105 transition-transform duration-300 hover:bg-white active:scale-95 active:bg-orange-300"
-                    />
-                </Link>
-                
-            )}
-            </div>
-        </div>
+<div className="flex items-center gap-4 px-4 py-3 bg-orange-200 rounded-full  shadow-sm ml-[20px]">
+  <Link 
+    to="/" 
+    className="p-2 text-gray-800 hover:text-gray-600 transition-colors duration-200 bg-amber-500 rounded-full"
+    aria-label="Home"
+  >
+    <RiHome2Fill className="w-6 h-6" />
+  </Link>
+  
+  {user && (
+    <>
+
+      
+      <Link 
+        to="/massage" 
+        className="p-2 text-gray-800 hover:text-gray-600 transition-colors duration-200 relative group "
+        aria-label="Appointments"
+      >
+        <FaBusinessTime className="w-6 h-6" />
+        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          Appointments
+        </span>
+      </Link>
+      
+      <Link 
+        to="/confirmedOrders" 
+        className="p-2 text-gray-800 hover:text-gray-600 transition-colors duration-200 relative group"
+        aria-label="Confirmed Orders"
+      >
+        <BsCartCheckFill className="w-6 h-6" />
+        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          My Orders
+        </span>
+      </Link>
+    </>
+  )}
+</div>
             
 
             <div className="flex items-center">
