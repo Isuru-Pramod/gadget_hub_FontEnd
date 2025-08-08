@@ -28,6 +28,8 @@ export default function Home() {
     }, []);
 
     const handleAddToCart = (item) => {
+
+
         setCartItems((prev) => {
             const existing = prev.find(p => p.id === item.id);
             if (existing) {
@@ -54,22 +56,24 @@ export default function Home() {
 
     const handlePlaceOrder = () => {
         if (!user || user.role !== "customer") {
+
             toast.error("You must be logged in to place an order");
             return;
         }
 
         if (cartItems.length === 0) {
+
             toast.error("Your cart is empty");
+
             return;
         }
 
         const quotationRequest = {
-            customerUsername: user.username,
             productOrders: cartItems.map(item => ({
                 productId: item.id,
-                quantity: item.quantity
+                quantityRequested: item.quantity
             })),
-            distributors: ["techworld", "electrocom", "gadgetcentral"]
+            distributors: ["d1", "d2", "d3"] // use actual distributor IDs or usernames if needed
         };
 
         axios.post("http://localhost:5131/api/quotations/request", quotationRequest)
